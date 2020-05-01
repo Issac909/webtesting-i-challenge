@@ -2,14 +2,14 @@ const { succeed, repair, fail } = require("./enhancer.js");
 
 describe("enhancer.js", () => {
   describe(".succeed()", () => {
-    it("should level up enhancement by 1", () => {
+    it("should increase level by 1", () => {
       const item = {
-        name: "Saradomin Sword",
+        name: "Excalibur",
         durability: 21,
         enhancement: 19
       };
       const expected = {
-        name: "Saradomin Sword",
+        name: "Excalibur",
         durability: 100,
         enhancement: 20
       };
@@ -20,77 +20,77 @@ describe("enhancer.js", () => {
   });
 
   describe(".repair()", () => {
-    it("takes in an item and changes durability to 100", () => {
+    it("repairs an item back to 100 durabilty", () => {
       const item = {
-        name: "Saradomin Sword",
-        durability: 10,
+        name: "Excalibur",
+        durability: 22,
         enhancement: 15
       };
 
       const expected = {
-        name: "Saradomin Sword",
+        name: "Excalibur",
         durability: 100,
         enhancement: 15
       };
 
-      const repairedItem = repair(item);
+      const repaired = repair(item);
 
-      expect(repairedItem).toEqual(expected);
+      expect(repaired).toEqual(expected);
     });
   });
 
   describe(".fail", () => {
-    it("decreases durability by 5 below level 15 enhancement", () => {
-      const lowLevelItem = {
-        name: "Saradomin Sword",
-        durability: 50,
+    it("decreases durability by 5 if enhancement is below level 15", () => {
+      const common = {
+        name: "Excalibur",
+        durability: 33,
         enhancement: 14
       };
 
-      const lowLevelExpected = {
-        name: "Saradomin Sword",
-        durability: 45,
+      const expectedCommon = {
+        name: "Excalibur",
+        durability: 28,
         enhancement: 14
       };
 
-      const failLowLevel= fail(lowLevelItem);
+      const failLowLevel= fail(common);
 
-      expect(failLowLevel).toEqual(lowLevelExpected);
+      expect(failLowLevel).toEqual(expectedCommon);
     });
 
     it("decreases durability by 10 above level 15 enhancement", () => {
-        const midLevelItem = {
-            name: "Saradomin Sword",
+        const rare = {
+            name: "Excalibur",
             durability: 33,
             enhancement: 15
         };
 
-        const midLevelExpected = {
-            name: "Saradomin Sword",
+        const expectedRare = {
+            name: "Excalibur",
             durability: 23,
             enhancement: 15
         };
 
-        const failMidLevel = fail(midLevelItem);
+        const rareItemEnhanceFail = fail(rare);
 
-        expect(failMidLevel).toEqual(midLevelExpected);
+        expect(rareItemEnhanceFail).toEqual(expectedRare);
     });
 
     it("decreases the durability by 10 and enhancement by 1 for items with enhancement above level 15", () => {
-        const highLevelItem = {
-            name: "Saradomin Sword",
+        const legendary = {
+            name: "Excalibur",
             durability: 23,
             enhancement: 29
         };
 
-        const highLevelExpected = {
-            name: "Saradomin Sword",
+        const expectedLegendary = {
+            name: "Excalibur",
             durability: 13,
             enhancement: 28
         };
 
-        const failHighLevel = fail(highLevelItem)
-        expect(failHighLevel).toEqual(highLevelExpected)
+        const legendaryEnhanceFail = fail(legendary)
+        expect(legendaryEnhanceFail).toEqual(expectedLegendary)
     })
   });
 });
